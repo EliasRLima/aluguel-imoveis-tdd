@@ -1,9 +1,13 @@
 package com.ifma.aluguel.imovel;
 
 import com.ifma.aluguel.entidade.Imovel;
+import com.ifma.aluguel.repositorio.implementacoes.ImovelRepositoryImpl;
+import com.ifma.aluguel.servico.ImovelServico;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
@@ -11,10 +15,15 @@ import static org.mockito.Mockito.when;
 public class ImovelTest {
 
     @Mock
-    private ImovelRepository imovelRepository;
+    private ImovelRepositoryImpl imovelRepository;
 
     @InjectMocks
-    private ImovelService imovelService;
+    private ImovelServico imovelService;
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+    }
 
     @Test
     public void imovelCreatTest(){
@@ -22,7 +31,7 @@ public class ImovelTest {
 
         boolean criarPeloRepository = false;
         when(imovelRepository.salvar(imovel)).thenReturn(criarPeloRepository);
-        boolean criarPeloService = imovelService.salvar(imovel);
+        boolean criarPeloService = imovelService.salvarImovel(imovel);
 
         assertEquals(criarPeloService, criarPeloRepository);
     }
@@ -32,8 +41,8 @@ public class ImovelTest {
         Integer idImovel = 123;
 
         Imovel imovelRetornoRepositorio = null;
-        when(imovelRepository.buscar(idImovel)).thenReturn(imovelRetornoRepositorio);
-        Imovel imovelRetornoService = imovelService.buscar(idImovel);
+        when(imovelRepository.getById(idImovel)).thenReturn(imovelRetornoRepositorio);
+        Imovel imovelRetornoService = imovelService.buscarPorId(idImovel);
 
         assertEquals(imovelRetornoService, imovelRetornoRepositorio);
     }
@@ -43,19 +52,19 @@ public class ImovelTest {
         Imovel imovelAtualizado = null;
 
         boolean retornoRepository = true;
-        when(imovelRepository.atualizar(imovelAtualizado)).thenReturn(retornoRepository);
-        boolean retornoService = imovelService.atualizar(imovelAtualizado);
+        when(imovelRepository.salvar(imovelAtualizado)).thenReturn(retornoRepository);
+        boolean retornoService = imovelService.atualizarImovel(imovelAtualizado);
 
         assertEquals(retornoService, retornoRepository);
     }
 
     @Test
     public void imovelDeleteTest(){
-        Integer idImovel = 123;
+        Imovel imovel = null;
 
         boolean retornoRepository = true;
-        when(imovelRepository.deletar(idImovel)).thenReturn(retornoRepository);
-        boolean retornoService = imovelService.remover(idImovel);
+        when(imovelRepository.deletar(imovel)).thenReturn(retornoRepository);
+        boolean retornoService = imovelService.removerImovel(imovel);
 
         assertEquals(retornoService, retornoRepository);
     }
