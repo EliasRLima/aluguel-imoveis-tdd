@@ -1,6 +1,8 @@
 package com.ifma.aluguel.cliente;
 
 import com.ifma.aluguel.entidade.Cliente;
+import com.ifma.aluguel.repositorio.implementacoes.ClienteRepositoryImpl;
+import com.ifma.aluguel.servico.ClienteServico;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -37,7 +39,7 @@ public class ClienteTest {
         Integer idCliente = 123;
 
         Cliente retornoClienteRepository = null;
-        when(clienteRepository.findById(idCliente)).thenReturn(retornoClienteRepository);
+        when(clienteRepository.getById(idCliente)).thenReturn(retornoClienteRepository);
         Cliente retornoClienteServico = clienteServico.buscarPorId(idCliente);
 
         assertEquals(retornoClienteServico, retornoClienteRepository);
@@ -48,7 +50,7 @@ public class ClienteTest {
         Cliente cliente = null;
 
         boolean retornoRepositorio = false;
-        when(clienteRepository.atualizar(cliente)).thenReturn(retornoRepositorio);
+        when(clienteRepository.salvar(cliente)).thenReturn(retornoRepositorio);
         boolean retornoServico = clienteServico.atualizarCliente(cliente);
 
         assertEquals(retornoServico, retornoRepositorio);
@@ -59,7 +61,7 @@ public class ClienteTest {
         Cliente cliente = null;
 
         boolean retornoRepositorio = false;
-        when(clienteRepository.remover(cliente)).thenReturn(retornoRepositorio);
+        when(clienteRepository.deletar(cliente)).thenReturn(retornoRepositorio);
         boolean retornoServico = clienteServico.removerCliente(cliente);
 
         assertEquals(retornoServico, retornoRepositorio);
