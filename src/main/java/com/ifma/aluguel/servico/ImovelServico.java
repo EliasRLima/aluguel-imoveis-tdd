@@ -26,8 +26,12 @@ public class ImovelServico {
         return repository.getById(idImovel);
     }
 
-    public List<Imovel> buscaPorCriterios(Imovel imovelBase){
-        return repository.getImoveisByCaracteristicas(imovelBase);
+    public List<Imovel> buscaDisponiveisPorModelo(Imovel imovelBase){
+        return repository.getImoveisDisponiveisByCaracteristicas(imovelBase);
+    }
+
+    public List<Imovel> buscaDisponiveisAbaixoValor(Double valorDesejado){
+        return repository.getImoveisDisponiveisAbaixoDoValor(valorDesejado);
     }
 
     public boolean salvarImovel(Imovel imovel){

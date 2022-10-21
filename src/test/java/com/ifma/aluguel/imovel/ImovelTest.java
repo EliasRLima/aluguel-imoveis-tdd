@@ -9,6 +9,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
@@ -71,12 +73,26 @@ public class ImovelTest {
 
     @Test
     public void buscaEmBairroPorTipoEstandoDisponivelTest(){
+        Imovel imovelModelo = new Imovel();
+        imovelModelo.setTipoImovel("Apartamento");
+        imovelModelo.setBairro("Centro");
 
+        List<Imovel> retornoRepository = null;
+        when(imovelRepository.getImoveisDisponiveisByCaracteristicas(imovelModelo)).thenReturn(retornoRepository);
+        List<Imovel> retornoService = imovelService.buscaDisponiveisPorModelo(imovelModelo);
+
+        assertEquals(retornoService, retornoRepository);
     }
 
     @Test
     public void buscaLimiteDeValorTest(){
+        Double valorLimite = 10000.0;
 
+        List<Imovel> retornoRepository = null;
+        when(imovelRepository.getImoveisDisponiveisAbaixoDoValor(valorLimite)).thenReturn(retornoRepository);
+        List<Imovel> retornoService = imovelService.buscaDisponiveisAbaixoValor(valorLimite);
+
+        assertEquals(retornoService, retornoRepository);
     }
 
 }

@@ -8,7 +8,9 @@ public interface ImovelRepository {
 
     public Imovel getById(Integer idImovel);
 
-    public List<Imovel> getImoveisByCaracteristicas(Imovel imovelBase);
+    public List<Imovel> getImoveisDisponiveisByCaracteristicas(Imovel imovelBase);
+
+    public List<Imovel> getImoveisDisponiveisAbaixoDoValor(Double valorSugerido);
 
     public boolean salvar(Imovel imovel);
 
