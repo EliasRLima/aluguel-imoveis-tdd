@@ -1,6 +1,8 @@
 package com.ifma.aluguel.aluguel;
 
 import com.ifma.aluguel.entidade.Aluguel;
+import com.ifma.aluguel.repositorio.implementacoes.AluguelRepositoryImpl;
+import com.ifma.aluguel.servico.AluguelServico;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -28,8 +30,8 @@ public class AluguelTest {
         Aluguel aluguel = null;
 
         boolean resultadoRepositorio = false;
-        when(aluguelRepository.salvar(aluguel)).thenReturn(resultadoRepositorio);
-        boolean resultadoServico = aluguelServico.salvar(aluguel);
+        when(aluguelRepository.salvarAluguel(aluguel)).thenReturn(resultadoRepositorio);
+        boolean resultadoServico = aluguelServico.salvarAluguel(aluguel);
 
         assertEquals(resultadoServico, resultadoRepositorio);
     }
@@ -40,7 +42,7 @@ public class AluguelTest {
 
         Aluguel aluguelResultadoRepositorio = null;
         when(aluguelRepository.getById(idAluguel)).thenReturn(aluguelResultadoRepositorio);
-        Aluguel aluguelResultadoServico = aluguelServico.buscarAluguelPorId(idAluguel);
+        Aluguel aluguelResultadoServico = aluguelServico.buscarPorId(idAluguel);
 
         assertEquals(aluguelResultadoServico, aluguelResultadoRepositorio);
     }
@@ -50,7 +52,7 @@ public class AluguelTest {
         Aluguel aluguel = null;
 
         boolean resultadoRepositorio = false;
-        when(aluguelRepository.update(aluguel)).thenReturn(resultadoRepositorio);
+        when(aluguelRepository.atualizarAluguel(aluguel)).thenReturn(resultadoRepositorio);
         boolean resultadoServico = aluguelServico.atualizarAluguel(aluguel);
 
         assertEquals(resultadoServico, resultadoRepositorio);
@@ -61,8 +63,8 @@ public class AluguelTest {
         Aluguel aluguel = null;
 
         boolean resultadoRepositorio = false;
-        when(aluguelRepository.delete(aluguel)).thenReturn(resultadoRepositorio);
-        boolean resultadoServico = aluguelServico.removerAluguel(aluguel);
+        when(aluguelRepository.deletarAluguel(aluguel)).thenReturn(resultadoRepositorio);
+        boolean resultadoServico = aluguelServico.deletarAluguel(aluguel);
 
         assertEquals(resultadoServico, resultadoRepositorio);
     }
