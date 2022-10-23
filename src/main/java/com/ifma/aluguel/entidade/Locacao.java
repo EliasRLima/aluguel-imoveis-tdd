@@ -20,7 +20,7 @@ public class Locacao {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private Integer idAluguel;
+    private Integer idLocacao;
     private Integer idImovel;
     private Integer idCliente;
 

@@ -22,6 +22,7 @@ public class Aluguel {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer idAluguel;
 
+    private Integer idLocacao;
     private LocalDateTime dataVencimento;
     private Double valorPago;
     private LocalDateTime dataPagamento;

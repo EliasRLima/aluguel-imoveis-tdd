@@ -1,12 +1,16 @@
 package com.ifma.aluguel.servico;
 
 import com.ifma.aluguel.entidade.Aluguel;
+import com.ifma.aluguel.entidade.Locacao;
+import com.ifma.aluguel.exception.AluguelException;
+import com.ifma.aluguel.exception.MessageProperties;
 import com.ifma.aluguel.repositorio.AluguelRepository;
 import com.ifma.aluguel.repositorio.implementacoes.AluguelRepositoryImpl;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.util.List;
+import java.util.Objects;
 
 public class AluguelServico {
 
@@ -30,10 +34,14 @@ public class AluguelServico {
     }
 
     public boolean salvarAluguel(Aluguel aluguel){
+        verificarValorPagoAluguelValido(aluguel);
+
         return aluguelRepository.salvarAluguel(aluguel);
     }
 
     public boolean atualizarAluguel(Aluguel aluguel){
+        verificarValorPagoAluguelValido(aluguel);
+
         return aluguelRepository.atualizarAluguel(aluguel);
     }
 
@@ -41,4 +49,16 @@ public class AluguelServico {
         return aluguelRepository.deletarAluguel(aluguel);
     }
 
+    public Double calculaValorDeveSerPago(){
+        return 0.0;
+    }
+
+    private void verificarValorPagoAluguelValido(Aluguel aluguel){
+        Locacao locacao = aluguelRepository.buscarLocacaoDoAluguel(aluguel);
+        if(Objects.nonNull(locacao))
+            if(locacao.getValorAluguel() < aluguel.getValorPago()){
+                throw new AluguelException(
+                    MessageProperties.getMensagemPadrao("erro.valor_pago.invalido"));
+            }
+    }
 }

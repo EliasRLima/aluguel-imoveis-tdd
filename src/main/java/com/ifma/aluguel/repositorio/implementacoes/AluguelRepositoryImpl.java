@@ -1,6 +1,8 @@
 package com.ifma.aluguel.repositorio.implementacoes;
 
 import com.ifma.aluguel.entidade.Aluguel;
+import com.ifma.aluguel.entidade.Locacao;
+
 import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,6 +25,15 @@ public class AluguelRepositoryImpl implements com.ifma.aluguel.repositorio.Alugu
     }
 
     @Override
+    public Locacao buscarLocacaoDoAluguel(Aluguel aluguel) {
+        List<Locacao> listaRetorno = manager.createQuery("from locacao a where i.idLocacao = :idLocacao", Locacao.class)
+                .setParameter("idLocacao", aluguel.getIdLocacao())
+                .getResultList();
+
+        return listaRetorno.size() > 0 ? listaRetorno.get(0) : null;
+    }
+
+    @Override
     public List<Aluguel> getAlugueisByCriterios(Aluguel aluguelBase) {
         String jsql = "from aluguel a " +
                       "where a.dataVencimento = COALESCE (:dataVencimento,  a.dataVencimento)" +
@@ -36,6 +47,23 @@ public class AluguelRepositoryImpl implements com.ifma.aluguel.repositorio.Alugu
                 .setParameter("dataPagamento", aluguelBase.getDataPagamento())
                 .setParameter("obs", aluguelBase.getObs())
                 .getResultList();
+    }
+
+    @Override
+    public List<Aluguel> getAlugueisPagos() {
+        String jsql = "from aluguel a " +
+                      "where a.valorPago > 0 ";
+
+        return manager.createQuery(jsql, Aluguel.class).getResultList();
+    }
+
+    @Override
+    public List<Aluguel> getAlugueisPagosNaDataVencimento() {
+        String jsql = "from aluguel a " +
+                      "where a.valorPago > 0 " +
+                      "and a.dataVencimento = a.dataPagamento ";
+
+        return manager.createQuery(jsql, Aluguel.class).getResultList();
     }
 
     @Override

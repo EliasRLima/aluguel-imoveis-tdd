@@ -23,4 +23,14 @@ public class LocacaoTest {
     public void locacaoDeleteTest(){
 
     }
+
+    @Test
+    public void verificaCalculoValorAluguelSemMulta(){
+
+    }
+
+    @Test
+    public void verificaCalculoValorAluguelComMulta(){
+
+    }
 }
