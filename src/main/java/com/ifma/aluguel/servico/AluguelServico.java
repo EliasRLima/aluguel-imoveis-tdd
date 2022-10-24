@@ -53,12 +53,12 @@ public class AluguelServico {
         return 0.0;
     }
 
-    private void verificarValorPagoAluguelValido(Aluguel aluguel){
+    public void verificarValorPagoAluguelValido(Aluguel aluguel){
         Locacao locacao = aluguelRepository.buscarLocacaoDoAluguel(aluguel);
         if(Objects.nonNull(locacao))
             if(locacao.getValorAluguel() < aluguel.getValorPago()){
                 throw new AluguelException(
                     MessageProperties.getMensagemPadrao("erro.valor_pago.invalido"));
-            }
+        }
     }
 }
