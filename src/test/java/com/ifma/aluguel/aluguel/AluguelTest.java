@@ -10,9 +10,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -89,7 +86,7 @@ public class AluguelTest {
     @Test
     public void verificaPagamentoInvalido(){
         Aluguel aluguel = new AluguelObjTest().getAluguelPagamentoInvalidoParaTest();
-        Throwable thrown = catchThrowable(() -> aluguelServico.atualizarAluguel(aluguel));
+        Throwable thrown = catchThrowable(() -> aluguelServico.verificarValorPagoAluguelValido(aluguel, 1200.0));
 
         assertThat(thrown).isInstanceOf(AluguelException.class)
                 .hasMessageContaining("O valor não é o suficiente para pagar o aluguel.");

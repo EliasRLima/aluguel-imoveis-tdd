@@ -34,13 +34,24 @@ public class AluguelServico {
     }
 
     public boolean salvarAluguel(Aluguel aluguel){
-        verificarValorPagoAluguelValido(aluguel);
+        try {
+            Locacao locacao = aluguelRepository.buscarLocacaoDoAluguel(aluguel);
+            verificarValorPagoAluguelValido(aluguel, locacao.getValorAluguel());
+        }catch (Exception e){
+            return false;
+        }
+
 
         return aluguelRepository.salvarAluguel(aluguel);
     }
 
     public boolean atualizarAluguel(Aluguel aluguel){
-        verificarValorPagoAluguelValido(aluguel);
+        try {
+            Locacao locacao = aluguelRepository.buscarLocacaoDoAluguel(aluguel);
+            verificarValorPagoAluguelValido(aluguel, locacao.getValorAluguel());
+        }catch (Exception e){
+            return false;
+        }
 
         return aluguelRepository.atualizarAluguel(aluguel);
     }
@@ -53,11 +64,9 @@ public class AluguelServico {
         return 0.0;
     }
 
-    public void verificarValorPagoAluguelValido(Aluguel aluguel){
-        Locacao locacao = aluguelRepository.buscarLocacaoDoAluguel(aluguel);
-        if(Objects.nonNull(locacao))
-            if(locacao.getValorAluguel() < aluguel.getValorPago()){
-                throw new AluguelException(
+    public void verificarValorPagoAluguelValido(Aluguel aluguel, Double valorLocacao) {
+        if (valorLocacao > aluguel.getValorPago()) {
+            throw new AluguelException(
                     MessageProperties.getMensagemPadrao("erro.valor_pago.invalido"));
         }
     }
