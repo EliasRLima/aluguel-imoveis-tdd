@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Getter
 @Setter
-@Table(name = "tb_cliente")
 public class Cliente {
 
     @Id
@@ -21,9 +20,9 @@ public class Cliente {
     private Integer idCliente;
 
     private String nomeCliente;
-    private Integer cpf;
-    private Integer telefone1;
-    private Integer telefone2;
+    private String cpf;
+    private String telefone1;
+    private String telefone2;
     private String email;
     private LocalDateTime dataNascimento;
 }

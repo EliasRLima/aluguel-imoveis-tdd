@@ -21,7 +21,7 @@ public class AluguelServico {
     }
 
     public AluguelServico() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("aluguelManager");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("databaseTest");
         this.aluguelRepository = new AluguelRepositoryImpl(emf.createEntityManager());
     }
 
@@ -34,24 +34,18 @@ public class AluguelServico {
     }
 
     public boolean salvarAluguel(Aluguel aluguel){
-        try {
-            Locacao locacao = aluguelRepository.buscarLocacaoDoAluguel(aluguel);
-            verificarValorPagoAluguelValido(aluguel, locacao.getValorAluguel());
-        }catch (Exception e){
-            return false;
+        Aluguel aluguelJaExiste = buscarPorId(aluguel.getIdAluguel());
+        if(Objects.nonNull(aluguelJaExiste)){
+            throw new AluguelException(
+                    MessageProperties.getMensagemPadrao("erro.existe.aluguel"));
         }
 
-
+        verificarValorPagoAluguelValido(aluguel);
         return aluguelRepository.salvarAluguel(aluguel);
     }
 
     public boolean atualizarAluguel(Aluguel aluguel){
-        try {
-            Locacao locacao = aluguelRepository.buscarLocacaoDoAluguel(aluguel);
-            verificarValorPagoAluguelValido(aluguel, locacao.getValorAluguel());
-        }catch (Exception e){
-            return false;
-        }
+        verificarValorPagoAluguelValido(aluguel);
 
         return aluguelRepository.atualizarAluguel(aluguel);
     }
@@ -64,9 +58,11 @@ public class AluguelServico {
         return 0.0;
     }
 
-    public void verificarValorPagoAluguelValido(Aluguel aluguel, Double valorLocacao) {
-        if (valorLocacao > aluguel.getValorPago()) {
-            throw new AluguelException(
+    public void verificarValorPagoAluguelValido(Aluguel aluguel){
+        Locacao locacao = aluguelRepository.buscarLocacaoDoAluguel(aluguel);
+        if(Objects.nonNull(locacao))
+            if(locacao.getValorAluguel() > aluguel.getValorPago()){
+                throw new AluguelException(
                     MessageProperties.getMensagemPadrao("erro.valor_pago.invalido"));
         }
     }

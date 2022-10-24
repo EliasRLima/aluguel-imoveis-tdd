@@ -16,7 +16,7 @@ public class ClienteRepositoryImpl implements ClienteRepository {
     }
     @Override
     public Cliente getById(Integer idCliente) {
-        List<Cliente> listaRetorno = manager.createQuery("from cliente i where i.idCliente = :idCliente", Cliente.class)
+        List<Cliente> listaRetorno = manager.createQuery("from Cliente i where i.idCliente = :idCliente", Cliente.class)
                                      .setParameter("idCliente", idCliente)
                                      .getResultList();
 
@@ -25,7 +25,7 @@ public class ClienteRepositoryImpl implements ClienteRepository {
 
     @Override
     public Cliente getClienteByCpf(Integer cpf) {
-        List<Cliente> listaRetorno = manager.createQuery("from cliente i where i.cpf = :cpf", Cliente.class)
+        List<Cliente> listaRetorno = manager.createQuery("from Cliente i where i.cpf = :cpf", Cliente.class)
                 .setParameter("cpf", cpf)
                 .getResultList();
 

@@ -17,7 +17,7 @@ public class AluguelRepositoryImpl implements com.ifma.aluguel.repositorio.Alugu
 
     @Override
     public Aluguel getById(Integer idAluguel) {
-        List<Aluguel> listaRetorno = manager.createQuery("from aluguel a where i.idAluguel = :idAluguel", Aluguel.class)
+        List<Aluguel> listaRetorno = manager.createQuery("from Aluguel a where a.idAluguel = :idAluguel", Aluguel.class)
                 .setParameter("idAluguel", idAluguel)
                 .getResultList();
 
@@ -26,7 +26,7 @@ public class AluguelRepositoryImpl implements com.ifma.aluguel.repositorio.Alugu
 
     @Override
     public Locacao buscarLocacaoDoAluguel(Aluguel aluguel) {
-        List<Locacao> listaRetorno = manager.createQuery("from locacao a where i.idLocacao = :idLocacao", Locacao.class)
+        List<Locacao> listaRetorno = manager.createQuery("from Locacao a where a.idLocacao = :idLocacao", Locacao.class)
                 .setParameter("idLocacao", aluguel.getIdLocacao())
                 .getResultList();
 
@@ -35,7 +35,7 @@ public class AluguelRepositoryImpl implements com.ifma.aluguel.repositorio.Alugu
 
     @Override
     public List<Aluguel> getAlugueisByCriterios(Aluguel aluguelBase) {
-        String jsql = "from aluguel a " +
+        String jsql = "from Aluguel a " +
                       "where a.dataVencimento = COALESCE (:dataVencimento,  a.dataVencimento)" +
                       "and a.valorPago = COALESCE (:valorPago, a.valorPago) " +
                       "and  a.dataPagamento = COALESCE (:dataPagamento, a.dataPagamento) " +
@@ -43,7 +43,7 @@ public class AluguelRepositoryImpl implements com.ifma.aluguel.repositorio.Alugu
 
         return manager.createQuery(jsql, Aluguel.class)
                 .setParameter("dataVencimento", aluguelBase.getDataVencimento())
-                .setParameter("valorPagoo", aluguelBase.getValorPago())
+                .setParameter("valorPago", aluguelBase.getValorPago())
                 .setParameter("dataPagamento", aluguelBase.getDataPagamento())
                 .setParameter("obs", aluguelBase.getObs())
                 .getResultList();
@@ -51,7 +51,7 @@ public class AluguelRepositoryImpl implements com.ifma.aluguel.repositorio.Alugu
 
     @Override
     public List<Aluguel> getAlugueisPagos() {
-        String jsql = "from aluguel a " +
+        String jsql = "from Aluguel a " +
                       "where a.valorPago > 0 ";
 
         return manager.createQuery(jsql, Aluguel.class).getResultList();
@@ -59,7 +59,7 @@ public class AluguelRepositoryImpl implements com.ifma.aluguel.repositorio.Alugu
 
     @Override
     public List<Aluguel> getAlugueisPagosNaDataVencimento() {
-        String jsql = "from aluguel a " +
+        String jsql = "from Aluguel a " +
                       "where a.valorPago > 0 " +
                       "and a.dataVencimento = a.dataPagamento ";
 
@@ -68,7 +68,7 @@ public class AluguelRepositoryImpl implements com.ifma.aluguel.repositorio.Alugu
 
     @Override
     public boolean salvarAluguel(Aluguel aluguel) {
-        manager.persist(aluguel);
+        manager.merge(aluguel);
         return true;
     }
 

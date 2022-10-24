@@ -16,7 +16,7 @@ public class LocacaoRepositoryImpl implements LocacaoRepository {
 
     @Override
     public Locacao getById(Integer idLocacao) {
-        List<Locacao> listaRetorno = manager.createQuery("from locacao a where i.idLocacao = :idLocacao", Locacao.class)
+        List<Locacao> listaRetorno = manager.createQuery("from locacao a where a.idLocacao = :idLocacao", Locacao.class)
                 .setParameter("idLocacao", idLocacao)
                 .getResultList();
 

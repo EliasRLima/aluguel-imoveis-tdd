@@ -17,6 +17,26 @@ public class AluguelObjTest {
         return aluguel;
     }
 
+    public Aluguel getNovoAluguelParaTest(){
+        Aluguel aluguel = new Aluguel();
+        aluguel.setIdAluguel(5);
+        aluguel.setIdLocacao(1);
+        aluguel.setValorPago(1200.0);
+        aluguel.setDataVencimento(LocalDateTime.now());
+        aluguel.setDataPagamento(LocalDateTime.now().minusDays(2));
+        return aluguel;
+    }
+
+    public Aluguel getAluguelNoBancoParaTest(){
+        Aluguel aluguel = new Aluguel();
+        aluguel.setIdAluguel(11);
+        aluguel.setIdLocacao(1);
+        aluguel.setValorPago(1200.0);
+        aluguel.setDataVencimento(LocalDateTime.now());
+        aluguel.setDataPagamento(LocalDateTime.now().minusDays(2));
+        return aluguel;
+    }
+
     public Aluguel getAluguelPagamentoInvalidoParaTest(){
         Aluguel aluguel = new Aluguel();
         aluguel.setIdAluguel(1);

@@ -12,7 +12,6 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "tb_imovel")
 public class Imovel {
 
     @Id

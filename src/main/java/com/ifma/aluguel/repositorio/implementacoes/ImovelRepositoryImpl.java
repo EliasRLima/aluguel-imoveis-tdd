@@ -17,7 +17,7 @@ public class ImovelRepositoryImpl implements ImovelRepository {
 
     @Override
     public Imovel getById(Integer idImovel) {
-        List<Imovel> listaRetorno = manager.createQuery("from imovel i where i.idImovel = :idImovel", Imovel.class)
+        List<Imovel> listaRetorno = manager.createQuery("from Imovel i where i.idImovel = :idImovel", Imovel.class)
                                     .setParameter("idImovel", idImovel)
                                     .getResultList();
 
@@ -26,7 +26,7 @@ public class ImovelRepositoryImpl implements ImovelRepository {
 
     @Override
     public List<Imovel> getImoveisDisponiveisByCaracteristicas(Imovel imovelBase) {
-        String query =  "from imovel i " +
+        String query =  "from Imovel i " +
                 "where i.tipoImovel = COALESCE (:tipoImovel, i.tipoImovel) " +
                 "and i.endereco = COALESCE (:endereco, i.endereco) " +
                 "and i.bairro = COALESCE (:bairro, i.bairro) " +
@@ -38,7 +38,7 @@ public class ImovelRepositoryImpl implements ImovelRepository {
                 "and i.vagasGaragem = COALESCE (:vagasGaragem, i.vagasGaragem) " +
                 "and i.valorAluguelSugerido = COALESCE (:valorAluguelSugerido, i.valorAluguelSugerido) " +
                 "and i.obs = COALESCE (:obs, i.obs) " +
-                "and not exists (select 0 from locacao l where l.idImovel = i.idImovel  and l.ativo = true)";
+                "and not exists (select 0 from Locacao l where l.idImovel = i.idImovel  and l.ativo = true)";
 
         List<Imovel> listaRetorno = manager.createQuery(query, Imovel.class)
                 .setParameter("tipoImovel", imovelBase.getTipoImovel())
@@ -59,9 +59,9 @@ public class ImovelRepositoryImpl implements ImovelRepository {
 
     @Override
     public List<Imovel> getImoveisDisponiveisAbaixoDoValor(Double valorSugerido) {
-        String query =  "from imovel i " +
+        String query =  "from Imovel i " +
                         "where i.valorAluguelSugerido <= :valorAluguelSugerido " +
-                        "and not exists (select 0 from locacao l where l.idImovel = i.idImovel  and l.ativo = true)";
+                        "and not exists (select 0 from Locacao l where l.idImovel = i.idImovel  and l.ativo = true)";
 
         List<Imovel> listaRetorno = manager.createQuery(query, Imovel.class)
                 .setParameter("valorAluguelSugerido", valorSugerido)
