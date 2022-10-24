@@ -48,6 +48,7 @@ public class AluguelTest {
     @Test
     public void componentesTestNaoEstaoNull(){
         assertThat(aluguelRepository).isNotNull();
+        assertThat(aluguelServico).isNotNull();
     }
 
     @Test
@@ -67,8 +68,6 @@ public class AluguelTest {
 
     @Test
     public void aluguelReadTest(){
-        Aluguel aluguel = new AluguelObjTest().getAluguelParaTest();
-
         assertTrue(Objects.isNull(aluguelRepository.getById(123)));
         assertFalse(Objects.isNull(aluguelRepository.getById(11)));
 

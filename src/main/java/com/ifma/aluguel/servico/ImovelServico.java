@@ -17,7 +17,7 @@ public class ImovelServico {
     }
 
     public ImovelServico() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("imovelManager");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("database");
         this.repository = new ImovelRepositoryImpl(emf.createEntityManager());
     }
 

@@ -1,70 +1,90 @@
 package com.ifma.aluguel.cliente;
 
 import com.ifma.aluguel.entidade.Cliente;
+import com.ifma.aluguel.exception.AluguelException;
 import com.ifma.aluguel.repositorio.implementacoes.ClienteRepositoryImpl;
 import com.ifma.aluguel.servico.ClienteServico;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
+import java.util.Objects;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 
 public class ClienteTest {
 
-    @Mock
+    private EntityManager manager;
+    private static EntityManagerFactory emf;
     private ClienteRepositoryImpl clienteRepository;
-    @InjectMocks
     private ClienteServico clienteServico;
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
+
+    @Before
+    public void inicio(){
+        emf = Persistence.createEntityManagerFactory("databaseTest");
+        manager = emf.createEntityManager();
+        manager.getTransaction().begin();
+
+        clienteRepository = new ClienteRepositoryImpl(manager);
+        clienteServico = new ClienteServico(clienteRepository);
+    }
+
+    @After
+    public void fim() {
+        manager.getTransaction().rollback();
+        emf.close();
     }
 
     @Test
     public void clienteCreatTest(){
-        Cliente cliente = null;
-
-        boolean retornoRepositorio = false;
-        when(clienteRepository.salvar(cliente)).thenReturn(retornoRepositorio);
+        Cliente cliente = new ClienteObjTest().getClienteNovoTest();
         boolean retornoServico = clienteServico.salvarCliente(cliente);
 
-        assertEquals(retornoServico, retornoRepositorio);
+        assertTrue(retornoServico);
+
+        Cliente clienteJaExistente = new ClienteObjTest().getClienteExistenteTest();
+        Throwable thrown = catchThrowable(() -> clienteServico.salvarCliente(clienteJaExistente));
+
+        assertThat(thrown).isInstanceOf(AluguelException.class)
+                .hasMessageContaining("O cliente informado já existe, considere verificar o identificado ou utilizar o metodo de atualizar.");
+
     }
 
     @Test
     public void clienteReadTest(){
-        Integer idCliente = 123;
 
-        Cliente retornoClienteRepository = null;
-        when(clienteRepository.getById(idCliente)).thenReturn(retornoClienteRepository);
-        Cliente retornoClienteServico = clienteServico.buscarPorId(idCliente);
+        Cliente clienteById = clienteRepository.getById(11);
+        Cliente clienteByCpf = clienteRepository.getClienteByCpf(clienteById.getCpf());
+        assertEquals(clienteById.getNomeCliente(), clienteByCpf.getNomeCliente());
 
-        assertEquals(retornoClienteServico, retornoClienteRepository);
+        Cliente clienteNovo = new ClienteObjTest().getClienteNovoTest();
+        assertTrue(Objects.isNull(clienteRepository.getById(clienteNovo.getIdCliente())));
     }
 
     @Test
     public void clienteUpdateTest(){
-        Cliente cliente = null;
-
-        boolean retornoRepositorio = false;
-        when(clienteRepository.salvar(cliente)).thenReturn(retornoRepositorio);
+        Cliente cliente = new ClienteObjTest().getClienteNovoTest();
         boolean retornoServico = clienteServico.atualizarCliente(cliente);
 
-        assertEquals(retornoServico, retornoRepositorio);
+        assertTrue(retornoServico);
     }
 
     @Test
     public void clienteDeleteTest(){
-        Cliente cliente = null;
+        Cliente cliente = clienteServico.buscarPorId(11);
+        assertTrue(Objects.nonNull(cliente));
 
-        boolean retornoRepositorio = false;
-        when(clienteRepository.deletar(cliente)).thenReturn(retornoRepositorio);
         boolean retornoServico = clienteServico.removerCliente(cliente);
-
-        assertEquals(retornoServico, retornoRepositorio);
+        assertTrue(retornoServico);
+        assertTrue(Objects.isNull(clienteRepository.getById(cliente.getIdCliente())));
     }
 
 }

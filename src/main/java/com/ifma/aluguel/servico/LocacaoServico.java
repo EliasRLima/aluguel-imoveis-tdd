@@ -13,7 +13,7 @@ public class LocacaoServico {
     private LocacaoRepository locacaoRepository;
 
     public LocacaoServico(LocacaoRepository locacaoRepository) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("locacaoManager");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("database");
         this.locacaoRepository = new LocacaoRepositoryImpl(emf.createEntityManager());
     }
 

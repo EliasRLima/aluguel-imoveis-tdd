@@ -9,7 +9,7 @@ public interface ClienteRepository {
 
     public Cliente getById(Integer idCliente);
 
-    public Cliente getClienteByCpf(Integer cpf);
+    public Cliente getClienteByCpf(String cpf);
 
     public boolean salvar(Cliente cliente);
 

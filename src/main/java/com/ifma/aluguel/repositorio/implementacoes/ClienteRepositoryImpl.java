@@ -24,7 +24,7 @@ public class ClienteRepositoryImpl implements ClienteRepository {
     }
 
     @Override
-    public Cliente getClienteByCpf(Integer cpf) {
+    public Cliente getClienteByCpf(String cpf) {
         List<Cliente> listaRetorno = manager.createQuery("from Cliente i where i.cpf = :cpf", Cliente.class)
                 .setParameter("cpf", cpf)
                 .getResultList();
@@ -34,7 +34,7 @@ public class ClienteRepositoryImpl implements ClienteRepository {
 
     @Override
     public boolean salvar(Cliente cliente) {
-        manager.persist(cliente);
+        manager.merge(cliente);
         return true;
     }
 
@@ -46,7 +46,7 @@ public class ClienteRepositoryImpl implements ClienteRepository {
 
     @Override
     public boolean deletar(Cliente cliente) {
-        manager.merge(cliente);
-        return false;
+        manager.remove(cliente);
+        return true;
     }
 }

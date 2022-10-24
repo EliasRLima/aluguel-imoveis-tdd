@@ -21,7 +21,7 @@ public class AluguelServico {
     }
 
     public AluguelServico() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("databaseTest");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("database");
         this.aluguelRepository = new AluguelRepositoryImpl(emf.createEntityManager());
     }
 
