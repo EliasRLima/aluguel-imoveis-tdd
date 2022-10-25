@@ -12,7 +12,7 @@ public interface ImovelRepository {
 
     public List<Imovel> getImoveisDisponiveisAbaixoDoValor(Double valorSugerido);
 
-    public boolean salvar(Imovel imovel);
+    public Imovel salvar(Imovel imovel);
 
     public boolean atualizar(Imovel imovel);
 

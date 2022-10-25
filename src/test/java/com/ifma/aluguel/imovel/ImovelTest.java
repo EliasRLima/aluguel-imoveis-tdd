@@ -44,16 +44,15 @@ public class ImovelTest {
 
     @Test
     public void imovelCreatTest(){
-        Imovel imovel = new ImovelObjTest().getImovelNovoTest();
 
-        boolean criarPeloService = imovelService.salvarImovel(imovel);
-        assertTrue(criarPeloService);
+        Imovel imovel = imovelService.salvarNovoImovel(new ImovelObjTest().getImovelNovoTest());
+        assertNotNull(imovel.getIdImovel());
 
         Imovel imovelJaExistente = new ImovelObjTest().getImovelExistenteTest();
-        Throwable thrown = catchThrowable(() -> imovelService.salvarImovel(imovelJaExistente));
+        Throwable thrown = catchThrowable(() -> imovelService.salvarNovoImovel(imovelJaExistente));
 
         assertThat(thrown).isInstanceOf(AluguelException.class)
-                .hasMessageContaining("O imovel informado já existe, considere verificar o identificado ou utilizar o metodo de atualizar.");
+                .hasMessageContaining("O imovel informado possui o identificador, considere utilizar o metodo de atualizar ou remova o identificador para salvar como um novo.");
     }
 
     @Test
@@ -71,12 +70,15 @@ public class ImovelTest {
 
     @Test
     public void imovelUpdateTest(){
-        Imovel imovelNovo = new ImovelObjTest().getImovelNovoTest();
-        boolean retornoService = imovelService.salvarImovel(imovelNovo);
+        Imovel imovelNovo = imovelService.salvarNovoImovel(new ImovelObjTest().getImovelNovoTest());
+        assertNotNull(imovelNovo.getIdImovel());
+
+        imovelNovo.setTipoImovel("Puxadinho");
+        boolean retornoService = imovelService.atualizarImovel(imovelNovo);
         assertTrue(retornoService);
-        imovelNovo.setTipoImovel("Chalé");
-        retornoService = imovelService.atualizarImovel(imovelNovo);
-        assertTrue(retornoService);
+
+        Imovel imovelAtualizado = imovelService.buscarPorId(imovelNovo.getIdImovel());
+        assertEquals(imovelAtualizado.getTipoImovel(), "Puxadinho");
 
     }
 

@@ -17,12 +17,14 @@ public class Cliente {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Column(name = "id_cliente")
     private Integer idCliente;
-
+    @Column(name = "nome_cliente")
     private String nomeCliente;
     private String cpf;
     private String telefone1;
     private String telefone2;
     private String email;
+    @Column(name = "data_nascimento")
     private LocalDateTime dataNascimento;
 }

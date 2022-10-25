@@ -33,9 +33,10 @@ public class ClienteRepositoryImpl implements ClienteRepository {
     }
 
     @Override
-    public boolean salvar(Cliente cliente) {
+    public Cliente salvar(Cliente cliente) {
         manager.persist(cliente);
-        return true;
+        manager.refresh(cliente);
+        return cliente;
     }
 
     @Override

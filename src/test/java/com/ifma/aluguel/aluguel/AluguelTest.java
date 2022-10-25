@@ -18,8 +18,7 @@ import java.util.Objects;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 public class AluguelTest {
@@ -53,16 +52,18 @@ public class AluguelTest {
 
     @Test
     public void aluguelCreatTest(){
-        Aluguel aluguel = new AluguelObjTest().getNovoAluguelParaTest();
 
-        boolean resultadoServico = aluguelServico.salvarAluguel(aluguel);
-        assertTrue(resultadoServico);
+        Aluguel salvarAluguel = aluguelServico.salvarNovoAluguel(new AluguelObjTest().getNovoAluguelParaTest());
+        assertNotNull(salvarAluguel.getIdAluguel());
+        Aluguel salvarAluguelRepository = aluguelRepository.salvarAluguel(new AluguelObjTest().getNovoAluguelParaTest());
+        assertNotNull(salvarAluguelRepository.getIdAluguel());
+
 
         Aluguel aluguelJaSalvo = new AluguelObjTest().getAluguelNoBancoParaTest();
-        Throwable thrown = catchThrowable(() -> aluguelServico.salvarAluguel(aluguelJaSalvo));
+        Throwable thrown = catchThrowable(() -> aluguelServico.salvarNovoAluguel(aluguelJaSalvo));
 
         assertThat(thrown).isInstanceOf(AluguelException.class)
-                .hasMessageContaining("O aluguel informado já existe, considere verificar o identificado ou utilizar o metodo de atualizar.");
+                .hasMessageContaining("O aluguel informado possui o identificador, considere utilizar o metodo de atualizar ou remova o identificador para salvar como um novo.");
 
     }
 
@@ -77,13 +78,12 @@ public class AluguelTest {
 
     @Test
     public void aluguelUpdateTest(){
-        Aluguel aluguel = new AluguelObjTest().getAluguelParaTest();
 
-        boolean resultadoServico = aluguelServico.salvarAluguel(aluguel);
-        assertTrue(resultadoServico);
+        Aluguel aluguel = aluguelServico.salvarNovoAluguel(new AluguelObjTest().getAluguelParaTest());
+        assertNotNull(aluguel.getIdAluguel());
 
         aluguel.setValorPago(1300.0);
-        resultadoServico = aluguelServico.atualizarAluguel(aluguel);
+        boolean resultadoServico = aluguelServico.atualizarAluguel(aluguel);
         assertTrue(resultadoServico);
 
         aluguel.setValorPago(500.0);

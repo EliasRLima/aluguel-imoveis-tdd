@@ -67,9 +67,10 @@ public class AluguelRepositoryImpl implements com.ifma.aluguel.repositorio.Alugu
     }
 
     @Override
-    public boolean salvarAluguel(Aluguel aluguel) {
+    public Aluguel salvarAluguel(Aluguel aluguel) {
         manager.persist(aluguel);
-        return true;
+        manager.refresh(aluguel);
+        return aluguel;
     }
 
     @Override

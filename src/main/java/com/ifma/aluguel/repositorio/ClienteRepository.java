@@ -11,7 +11,7 @@ public interface ClienteRepository {
 
     public Cliente getClienteByCpf(String cpf);
 
-    public boolean salvar(Cliente cliente);
+    public Cliente salvar(Cliente cliente);
 
     public boolean atualizar(Cliente cliente);
 

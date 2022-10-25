@@ -11,8 +11,8 @@
         <properties>
             <!-- Configuring JDBC properties -->
             <property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:testdb"/>
-            <property name="javax.persistence.jdbc.user" value="h2admin" />
-            <property name="javax.persistence.jdbc.password" value="pass" />
+            <property name="javax.persistence.jdbc.user" value="sa" />
+            <property name="javax.persistence.jdbc.password" value="123" />
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />
 
 

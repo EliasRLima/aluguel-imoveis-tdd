@@ -33,9 +33,8 @@ public class AluguelServico {
         return aluguelRepository.getAlugueisByCriterios(aluguelBase);
     }
 
-    public boolean salvarAluguel(Aluguel aluguel){
-        Aluguel aluguelJaExiste = buscarPorId(aluguel.getIdAluguel());
-        if(Objects.nonNull(aluguelJaExiste)){
+    public Aluguel salvarNovoAluguel(Aluguel aluguel){
+        if(Objects.nonNull(aluguel.getIdAluguel())){
             throw new AluguelException(
                     MessageProperties.getMensagemPadrao("erro.existe.aluguel"));
         }

@@ -37,9 +37,8 @@ public class ImovelServico {
         return repository.getImoveisDisponiveisAbaixoDoValor(valorDesejado);
     }
 
-    public boolean salvarImovel(Imovel imovel){
-        Imovel imovelJaExiste = buscarPorId(imovel.getIdImovel());
-        if(Objects.nonNull(imovelJaExiste)){
+    public Imovel salvarNovoImovel(Imovel imovel){
+        if(Objects.nonNull(imovel.getIdImovel())){
             throw new AluguelException(
                     MessageProperties.getMensagemPadrao("erro.existe.imovel"));
         }
@@ -47,7 +46,7 @@ public class ImovelServico {
     }
 
     public boolean atualizarImovel(Imovel imovel){
-        return repository.salvar(imovel);
+        return repository.atualizar(imovel);
     }
 
     public boolean removerImovel(Imovel imovel){

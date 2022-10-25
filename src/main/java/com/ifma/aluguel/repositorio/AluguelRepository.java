@@ -17,7 +17,7 @@ public interface AluguelRepository {
 
     public List<Aluguel> getAlugueisPagosNaDataVencimento();
 
-    public boolean salvarAluguel(Aluguel aluguel);
+    public Aluguel salvarAluguel(Aluguel aluguel);
 
     public boolean atualizarAluguel(Aluguel aluguel);
 

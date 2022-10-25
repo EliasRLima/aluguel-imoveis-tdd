@@ -73,9 +73,10 @@ public class ImovelRepositoryImpl implements ImovelRepository {
 
 
     @Override
-    public boolean salvar(Imovel imovel) {
+    public Imovel salvar(Imovel imovel) {
         manager.persist(imovel);
-        return true;
+        manager.refresh(imovel);
+        return imovel;
     }
 
     @Override

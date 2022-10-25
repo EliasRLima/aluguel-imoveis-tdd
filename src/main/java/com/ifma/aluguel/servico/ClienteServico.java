@@ -24,9 +24,8 @@ public class ClienteServico {
         this.clienteRepository = new ClienteRepositoryImpl(emf.createEntityManager());
     }
 
-    public boolean salvarCliente(Cliente cliente){
-        Cliente clienteJaSalvo = buscarPorId(cliente.getIdCliente());
-        if(Objects.nonNull(clienteJaSalvo)){
+    public Cliente salvarNovoCliente(Cliente cliente){
+        if(Objects.nonNull(cliente.getIdCliente())){
             throw new AluguelException(
                     MessageProperties.getMensagemPadrao("erro.existe.cliente"));
         }

@@ -16,8 +16,7 @@ import java.util.Objects;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 
 public class ClienteTest {
@@ -45,16 +44,16 @@ public class ClienteTest {
 
     @Test
     public void clienteCreatTest(){
-        Cliente cliente = new ClienteObjTest().getClienteNovoTest();
-        boolean retornoServico = clienteServico.salvarCliente(cliente);
 
-        assertTrue(retornoServico);
+        Cliente cliente = clienteServico.salvarNovoCliente(new ClienteObjTest().getClienteNovoTest());
+
+        assertNotNull(cliente.getIdCliente());
 
         Cliente clienteJaExistente = new ClienteObjTest().getClienteExistenteTest();
-        Throwable thrown = catchThrowable(() -> clienteServico.salvarCliente(clienteJaExistente));
+        Throwable thrown = catchThrowable(() -> clienteServico.salvarNovoCliente(clienteJaExistente));
 
         assertThat(thrown).isInstanceOf(AluguelException.class)
-                .hasMessageContaining("O cliente informado já existe, considere verificar o identificado ou utilizar o metodo de atualizar.");
+                .hasMessageContaining("O cliente informado possui o identificador, considere utilizar o metodo de atualizar ou remova o identificador para salvar como um novo.");
 
     }
 
