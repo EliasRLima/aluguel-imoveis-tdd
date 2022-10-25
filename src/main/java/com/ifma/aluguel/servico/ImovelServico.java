@@ -1,12 +1,15 @@
 package com.ifma.aluguel.servico;
 
 import com.ifma.aluguel.entidade.Imovel;
+import com.ifma.aluguel.exception.AluguelException;
+import com.ifma.aluguel.exception.MessageProperties;
 import com.ifma.aluguel.repositorio.ImovelRepository;
 import com.ifma.aluguel.repositorio.implementacoes.ImovelRepositoryImpl;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.util.List;
+import java.util.Objects;
 
 public class ImovelServico {
 
@@ -35,6 +38,11 @@ public class ImovelServico {
     }
 
     public boolean salvarImovel(Imovel imovel){
+        Imovel imovelJaExiste = buscarPorId(imovel.getIdImovel());
+        if(Objects.nonNull(imovelJaExiste)){
+            throw new AluguelException(
+                    MessageProperties.getMensagemPadrao("erro.existe.imovel"));
+        }
         return repository.salvar(imovel);
     }
 

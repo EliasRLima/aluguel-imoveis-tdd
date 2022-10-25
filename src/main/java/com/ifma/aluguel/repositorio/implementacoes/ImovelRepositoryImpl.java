@@ -74,13 +74,19 @@ public class ImovelRepositoryImpl implements ImovelRepository {
 
     @Override
     public boolean salvar(Imovel imovel) {
+        manager.persist(imovel);
+        return true;
+    }
+
+    @Override
+    public  boolean atualizar(Imovel imovel){
         manager.merge(imovel);
         return true;
     }
 
     @Override
     public boolean deletar(Imovel imovel) {
-        manager.remove(imovel);
+        manager.remove(manager.contains(imovel) ? imovel : manager.merge(imovel));
         return true;
     }
 }

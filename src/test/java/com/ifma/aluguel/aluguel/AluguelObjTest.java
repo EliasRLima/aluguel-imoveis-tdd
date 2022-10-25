@@ -9,8 +9,7 @@ public class AluguelObjTest {
 
     public Aluguel getAluguelParaTest(){
         Aluguel aluguel = new Aluguel();
-        aluguel.setIdAluguel(1);
-        aluguel.setIdLocacao(1);
+        aluguel.setIdLocacao(11);
         aluguel.setValorPago(1200.0);
         aluguel.setDataVencimento(LocalDateTime.now());
         aluguel.setDataPagamento(LocalDateTime.now().minusDays(2));
@@ -19,7 +18,6 @@ public class AluguelObjTest {
 
     public Aluguel getNovoAluguelParaTest(){
         Aluguel aluguel = new Aluguel();
-        aluguel.setIdAluguel(5);
         aluguel.setIdLocacao(1);
         aluguel.setValorPago(1200.0);
         aluguel.setDataVencimento(LocalDateTime.now());
@@ -40,8 +38,8 @@ public class AluguelObjTest {
     public Aluguel getAluguelPagamentoInvalidoParaTest(){
         Aluguel aluguel = new Aluguel();
         aluguel.setIdAluguel(1);
-        aluguel.setIdLocacao(1);
-        aluguel.setValorPago(100.0);
+        aluguel.setIdLocacao(11);
+        aluguel.setValorPago(800.0);
         aluguel.setDataVencimento(LocalDateTime.now());
         aluguel.setDataPagamento(LocalDateTime.now().minusDays(2));
         return aluguel;

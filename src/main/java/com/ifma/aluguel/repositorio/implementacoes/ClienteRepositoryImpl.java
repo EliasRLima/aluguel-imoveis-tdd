@@ -34,7 +34,7 @@ public class ClienteRepositoryImpl implements ClienteRepository {
 
     @Override
     public boolean salvar(Cliente cliente) {
-        manager.merge(cliente);
+        manager.persist(cliente);
         return true;
     }
 

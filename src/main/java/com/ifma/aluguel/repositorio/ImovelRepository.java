@@ -14,5 +14,7 @@ public interface ImovelRepository {
 
     public boolean salvar(Imovel imovel);
 
+    public boolean atualizar(Imovel imovel);
+
     public boolean deletar(Imovel imovel);
 }

@@ -79,14 +79,23 @@ public class AluguelTest {
     public void aluguelUpdateTest(){
         Aluguel aluguel = new AluguelObjTest().getAluguelParaTest();
 
-        boolean resultadoServico = aluguelServico.atualizarAluguel(aluguel);
-
+        boolean resultadoServico = aluguelServico.salvarAluguel(aluguel);
         assertTrue(resultadoServico);
+
+        aluguel.setValorPago(1300.0);
+        resultadoServico = aluguelServico.atualizarAluguel(aluguel);
+        assertTrue(resultadoServico);
+
+        aluguel.setValorPago(500.0);
+        Throwable thrown = catchThrowable(() -> aluguelServico.atualizarAluguel(aluguel));
+
+        assertThat(thrown).isInstanceOf(AluguelException.class)
+                .hasMessageContaining("O valor não é o suficiente para pagar o aluguel.");
     }
 
     @Test
     public void aluguelDeleteTest(){
-        Aluguel aluguel = new AluguelObjTest().getAluguelParaTest();
+        Aluguel aluguel = new AluguelObjTest().getAluguelNoBancoParaTest();
         boolean resultadoServico = aluguelServico.deletarAluguel(aluguel);
 
         assertTrue(resultadoServico);
@@ -97,7 +106,6 @@ public class AluguelTest {
         Aluguel aluguel = new AluguelObjTest().getAluguelParaTest();
 
         boolean resultadoServico = aluguelServico.atualizarAluguel(aluguel);
-
         assertTrue(resultadoServico);
     }
 
