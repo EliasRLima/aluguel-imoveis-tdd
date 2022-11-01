@@ -1,4 +1,4 @@
-package com.ifma.aluguel.cliente;
+package com.ifma.aluguel.integracao.cliente;
 
 import com.ifma.aluguel.entidade.Cliente;
 import com.ifma.aluguel.exception.AluguelException;

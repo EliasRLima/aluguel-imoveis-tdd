@@ -32,6 +32,10 @@ public class ClienteRepositoryImpl implements ClienteRepository {
         return listaRetorno.size() > 0 ? listaRetorno.get(0) : null;
     }
 
+    public List<Cliente> getClienteComAluguelAtrasado(){
+        return null;
+    }
+
     @Override
     public Cliente salvar(Cliente cliente) {
         manager.persist(cliente);
