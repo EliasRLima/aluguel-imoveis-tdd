@@ -33,7 +33,16 @@ public class ClienteRepositoryImpl implements ClienteRepository {
     }
 
     public List<Cliente> getClienteComAluguelAtrasado(){
-        return null;
+        List<Cliente> listaRetorno = manager.createQuery("from Cliente i " +
+                        "where exists (select 0 " +
+                                      "from Locacao l, Aluguel a " +
+                                      "where l.idCliente = i.idCliente " +
+                                      "and l.idLocacao = a.idLocacao " +
+                                      "and a.dataVencimento < CURRENT_TIMESTAMP()" +
+                                      "and a.dataPagamento is null)", Cliente.class)
+                .getResultList();
+
+        return listaRetorno;
     }
 
     @Override
