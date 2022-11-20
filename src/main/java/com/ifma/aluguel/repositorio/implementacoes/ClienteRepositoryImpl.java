@@ -32,6 +32,7 @@ public class ClienteRepositoryImpl implements ClienteRepository {
         return listaRetorno.size() > 0 ? listaRetorno.get(0) : null;
     }
 
+    @Override
     public List<Cliente> getClienteComAluguelAtrasado(){
         List<Cliente> listaRetorno = manager.createQuery("from Cliente i " +
                         "where exists (select 0 " +
