@@ -12,6 +12,7 @@ import javax.persistence.Persistence;
 import java.util.List;
 import java.util.Objects;
 
+
 public class AluguelServico {
 
     private AluguelRepository aluguelRepository;
@@ -58,7 +59,7 @@ public class AluguelServico {
     }
 
     public void verificarValorPagoAluguelValido(Aluguel aluguel){
-        Locacao locacao = aluguelRepository.buscarLocacaoDoAluguel(aluguel);
+        Locaca locacao = aluguelRepository.buscarLocacaoDoAluguel(aluguel);
         if(Objects.nonNull(locacao))
             if(locacao.getValorAluguel() > aluguel.getValorPago()){
                 throw new AluguelException(
