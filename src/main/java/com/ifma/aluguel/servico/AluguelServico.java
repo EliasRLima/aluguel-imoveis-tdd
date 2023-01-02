@@ -59,7 +59,7 @@ public class AluguelServico {
     }
 
     public void verificarValorPagoAluguelValido(Aluguel aluguel){
-        Locaca locacao = aluguelRepository.buscarLocacaoDoAluguel(aluguel);
+        Locacao locacao = aluguelRepository.buscarLocacaoDoAluguel(aluguel);
         if(Objects.nonNull(locacao))
             if(locacao.getValorAluguel() > aluguel.getValorPago()){
                 throw new AluguelException(
