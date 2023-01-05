@@ -1,5 +1,6 @@
 package com.ifma.aluguel.servico;
 
+import com.ifma.aluguel.api.EmailApi;
 import com.ifma.aluguel.entidade.Cliente;
 import com.ifma.aluguel.exception.AluguelException;
 import com.ifma.aluguel.exception.MessageProperties;
@@ -9,6 +10,7 @@ import com.ifma.aluguel.repositorio.implementacoes.ImovelRepositoryImpl;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import java.util.List;
 import java.util.Objects;
 
 public class ClienteServico {
@@ -31,6 +33,18 @@ public class ClienteServico {
         }
 
         return clienteRepository.salvar(cliente);
+    }
+
+    public void notificarAtrasados(){
+        List<Cliente> atrasados = clienteRepository.getClienteComAluguelAtrasado();
+        atrasados.forEach(atrasado -> {
+            try{
+                EmailApi.sendEmail(atrasado.getEmail(), "Seu aluguel esta atrasado, evite despejo e multas.");
+            }catch (Exception e){
+                System.out.println("Error ao enviar email para " + atrasado.getEmail());
+            }
+        });
+
     }
 
     public Cliente buscarPorId(Integer idCliente){

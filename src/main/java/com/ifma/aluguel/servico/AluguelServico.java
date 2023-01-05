@@ -12,6 +12,7 @@ import javax.persistence.Persistence;
 import java.util.List;
 import java.util.Objects;
 
+
 public class AluguelServico {
 
     private AluguelRepository aluguelRepository;

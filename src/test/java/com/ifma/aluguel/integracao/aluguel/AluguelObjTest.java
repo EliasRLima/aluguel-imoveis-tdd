@@ -1,4 +1,4 @@
-package com.ifma.aluguel.aluguel;
+package com.ifma.aluguel.integracao.aluguel;
 
 import com.ifma.aluguel.entidade.Aluguel;
 import com.ifma.aluguel.repositorio.AluguelRepository;
